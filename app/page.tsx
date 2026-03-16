@@ -1,653 +1,827 @@
 "use client";
-
 import { useState, useEffect } from "react";
 
-// ─── NAV ─────────────────────────────────────────────────────────────────────
-function Nav() {
+const NAV_LINKS = ["About", "Practice Areas", "Our Team", "Testimonials", "Contact"];
+
+const PRACTICE_AREAS = [
+  {
+    icon: "⚖️",
+    title: "Corporate & Commercial Law",
+    desc: "Company formation, mergers & acquisitions, joint ventures, commercial contracts, and regulatory compliance for businesses across Nigeria."
+  },
+  {
+    icon: "🏛️",
+    title: "Litigation & Dispute Resolution",
+    desc: "Vigorous representation in courts at all levels — from Magistrate to Supreme Court — and skilled arbitration and mediation services."
+  },
+  {
+    icon: "🏘️",
+    title: "Real Estate & Property",
+    desc: "Property acquisition, title verification, conveyancing, land use matters, and resolving property disputes across the FCT and beyond."
+  },
+  {
+    icon: "👨‍👩‍👧",
+    title: "Family Law",
+    desc: "Matrimonial causes, child custody, adoption, succession and estate planning handled with sensitivity, discretion, and legal precision."
+  },
+  {
+    icon: "🔒",
+    title: "Criminal Defense",
+    desc: "Uncompromising defense for individuals facing criminal charges. We protect your rights from arrest through trial and appeal."
+  },
+  {
+    icon: "📋",
+    title: "Employment & Labour",
+    desc: "Employment contracts, workplace disputes, wrongful termination, and Labour Court representation for both employers and employees."
+  },
+  {
+    icon: "💡",
+    title: "Intellectual Property",
+    desc: "Trademark registration, copyright protection, patent advisory, and IP enforcement to safeguard your creative and commercial assets."
+  },
+  {
+    icon: "🌍",
+    title: "Immigration Law",
+    desc: "Work permits, residency applications, citizenship matters, and immigration compliance for individuals and multinational companies."
+  },
+];
+
+const TEAM = [
+  {
+    name: "Frank Mba",
+    title: "Managing Partner",
+    areas: "Corporate Law · Litigation",
+    initial: "FM",
+  },
+  {
+    name: "Adaeze Okonkwo",
+    title: "Senior Associate",
+    areas: "Real Estate · Family Law",
+    initial: "AO",
+  },
+  {
+    name: "Emeka Balogun",
+    title: "Associate",
+    areas: "Criminal Defense · Employment",
+    initial: "EB",
+  },
+  {
+    name: "Ngozi Eze",
+    title: "Associate",
+    areas: "IP · Immigration",
+    initial: "NE",
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "Law Tribes handled our company's acquisition seamlessly. Their attention to detail and deep knowledge of Nigerian corporate law gave us complete confidence throughout the process.",
+    author: "Chukwuemeka Obi",
+    role: "CEO, TechBridge Nigeria",
+  },
+  {
+    quote: "When my property dispute seemed unwinnable, Law Tribes found angles no other firm had considered. They secured my title within six months. Exceptional team.",
+    author: "Mrs. Fatima Al-Hassan",
+    role: "Business Owner, Abuja",
+  },
+  {
+    quote: "Frank Mba and his team defended me with integrity and skill. Their professionalism under pressure is unmatched. I would trust no other firm with matters this serious.",
+    author: "Oluwaseun Adeyemi",
+    role: "Private Client",
+  },
+];
+
+const STATS = [
+  { value: "15+", label: "Years of Practice" },
+  { value: "500+", label: "Cases Won" },
+  { value: "8", label: "Practice Areas" },
+  { value: "98%", label: "Client Satisfaction" },
+];
+
+export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const links = ["About", "Practice Areas", "Our Team", "Testimonials", "Contact"];
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#080808]/95 backdrop-blur-md border-b border-[#2a2a2a]" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
-          <div className="w-8 h-8 border-2 border-[#c9a84c] flex items-center justify-center">
-            <span className="text-[#c9a84c] font-bold text-xs tracking-widest">LT</span>
-          </div>
-          <div>
-            <span className="font-['Playfair_Display'] text-white text-lg font-semibold tracking-wide">
-              Law Tribes
-            </span>
-            <span className="block text-[#888880] text-[9px] tracking-[0.3em] uppercase">Attorneys</span>
-          </div>
-        </a>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map(link => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase().replace(" ", "-")}`}
-              className="text-[#888880] hover:text-[#c9a84c] text-sm tracking-wide transition-colors duration-200 font-['Inter']"
-            >
-              {link}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            className="ml-4 px-5 py-2.5 border border-[#c9a84c] text-[#c9a84c] text-sm tracking-wider hover:bg-[#c9a84c] hover:text-black transition-all duration-200 font-['Inter'] font-medium"
-          >
-            Free Consultation
-          </a>
-        </div>
-
-        {/* Mobile menu btn */}
-        <button
-          className="md:hidden text-[#888880] hover:text-[#c9a84c]"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            {menuOpen ? (
-              <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <>
-                <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
-              </>
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-[#0e0e0e] border-t border-[#2a2a2a] px-6 py-4 space-y-4">
-          {links.map(link => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase().replace(" ", "-")}`}
-              className="block text-[#888880] hover:text-[#c9a84c] text-sm tracking-wide transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              {link}
-            </a>
-          ))}
-          <a href="#contact" className="block mt-4 px-5 py-2.5 border border-[#c9a84c] text-[#c9a84c] text-sm text-center" onClick={() => setMenuOpen(false)}>
-            Free Consultation
-          </a>
-        </div>
-      )}
-    </nav>
-  );
-}
-
-// ─── HERO ─────────────────────────────────────────────────────────────────────
-function Hero() {
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              0deg, transparent, transparent 80px, #c9a84c 80px, #c9a84c 81px
-            ), repeating-linear-gradient(
-              90deg, transparent, transparent 80px, #c9a84c 80px, #c9a84c 81px
-            )`,
-          }}
-        />
-        {/* Gold glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5"
-          style={{ background: "radial-gradient(circle, #c9a84c, transparent 70%)" }}
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="max-w-4xl">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-[1px] bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">
-              Abuja, Nigeria · Est. 2010
-            </span>
-          </div>
-
-          {/* Headline */}
-          <h1 className="font-['Playfair_Display'] text-5xl md:text-7xl lg:text-8xl font-semibold leading-[1.05] text-white mb-8">
-            Justice Is Not
-            <br />
-            A Privilege —
-            <br />
-            <em className="text-gradient not-italic">It&apos;s Your Right.</em>
-          </h1>
-
-          <p className="text-[#888880] text-lg md:text-xl font-['Inter'] font-light leading-relaxed max-w-2xl mb-12">
-            Law Tribes Attorneys delivers formidable legal representation across every
-            practice area. From boardrooms to courtrooms, we fight for outcomes that matter.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#contact"
-              className="px-8 py-4 bg-[#c9a84c] text-black font-['Inter'] font-semibold tracking-wider text-sm hover:bg-[#e8c96a] transition-colors duration-200 text-center"
-            >
-              Schedule Free Consultation
-            </a>
-            <a
-              href="#practice-areas"
-              className="px-8 py-4 border border-[#2a2a2a] text-[#888880] font-['Inter'] text-sm tracking-wider hover:border-[#c9a84c] hover:text-[#c9a84c] transition-all duration-200 text-center"
-            >
-              Explore Practice Areas
-            </a>
-          </div>
-
-          {/* Stats */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-[#1a1a1a]">
-            {[
-              { num: "500+", label: "Cases Won" },
-              { num: "15+", label: "Years Experience" },
-              { num: "12", label: "Practice Areas" },
-              { num: "98%", label: "Client Satisfaction" },
-            ].map(stat => (
-              <div key={stat.label}>
-                <div className="font-['Playfair_Display'] text-3xl md:text-4xl text-gradient font-semibold">
-                  {stat.num}
-                </div>
-                <div className="text-[#888880] text-xs tracking-widest uppercase font-['Inter'] mt-1">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#444]">
-        <span className="text-xs tracking-[0.3em] uppercase font-['Inter']">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-[#444] to-transparent" />
-      </div>
-    </section>
-  );
-}
-
-// ─── ABOUT ────────────────────────────────────────────────────────────────────
-function About() {
-  return (
-    <section id="about" className="py-24 md:py-32 bg-[#0d0d0d]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
-          {/* Left */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="section-divider" />
-              <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">Our Story</span>
-            </div>
-            <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-semibold text-white leading-tight mb-6">
-              A Law Firm Built on
-              <em className="text-gradient not-italic block"> Principle & Precision</em>
-            </h2>
-            <p className="text-[#888880] font-['Inter'] font-light leading-relaxed mb-6">
-              Founded in Abuja, Law Tribes Attorneys has grown from a boutique practice into
-              one of Nigeria&apos;s most trusted full-service law firms. We combine the personal
-              attention of a close-knit team with the resources and breadth of a major firm.
-            </p>
-            <p className="text-[#888880] font-['Inter'] font-light leading-relaxed mb-10">
-              Every client — individual, startup, or corporation — receives our most strategic
-              thinking, most rigorous preparation, and most tenacious advocacy. We don&apos;t just
-              represent you; we stand with you.
-            </p>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-[1px] bg-[#c9a84c]" />
-              <span className="font-['Playfair_Display'] italic text-[#c9a84c] text-lg">
-                Frank Mba, Managing Partner
-              </span>
-            </div>
-          </div>
-
-          {/* Right — values */}
-          <div className="space-y-px">
-            {[
-              { title: "Integrity Above All", desc: "We hold ourselves to the highest ethical standards — in counsel, in court, and in client relationships." },
-              { title: "Strategic Excellence", desc: "Every case is approached with analytical rigor, creative thinking, and relentless preparation." },
-              { title: "Client-Centred Service", desc: "Your goals shape our strategy. We listen first, then act — with your best interest as the only compass." },
-              { title: "Deep Nigerian Expertise", desc: "15+ years navigating Nigeria's legal landscape gives our clients a decisive advantage." },
-            ].map((v, i) => (
-              <div key={i} className="p-6 bg-[#111] border border-[#1a1a1a] hover:border-[#c9a84c]/30 transition-colors duration-300 group">
-                <div className="flex items-start gap-4">
-                  <span className="text-[#c9a84c] font-['Playfair_Display'] text-2xl font-semibold opacity-40 group-hover:opacity-100 transition-opacity">
-                    0{i + 1}
-                  </span>
-                  <div>
-                    <h3 className="text-white font-['Inter'] font-medium mb-1">{v.title}</h3>
-                    <p className="text-[#888880] font-['Inter'] font-light text-sm leading-relaxed">{v.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── PRACTICE AREAS ───────────────────────────────────────────────────────────
-const practices = [
-  { icon: "⚖️", title: "Corporate & Commercial Law", desc: "Company formation, mergers & acquisitions, corporate governance, contracts, and commercial transactions." },
-  { icon: "🏛️", title: "Civil Litigation", desc: "Vigorous representation in disputes involving contracts, torts, property, and constitutional matters." },
-  { icon: "🔒", title: "Criminal Defense", desc: "Fearless defense at every stage — from investigation through trial and appeal." },
-  { icon: "🏠", title: "Real Estate & Property", desc: "Conveyancing, title registration, landlord/tenant disputes, and property development advisory." },
-  { icon: "👪", title: "Family Law", desc: "Divorce, custody, adoption, inheritance, and matrimonial property — handled with discretion." },
-  { icon: "✈️", title: "Immigration Law", desc: "Visas, permits, residency applications, and Nigerian immigration compliance for individuals and businesses." },
-  { icon: "💼", title: "Employment & Labour", desc: "Workplace disputes, wrongful termination, employment contracts, and labour regulatory compliance." },
-  { icon: "💡", title: "Intellectual Property", desc: "Trademark, copyright, patent registration, and IP protection strategies for creators and brands." },
-  { icon: "⚡", title: "Energy & Natural Resources", desc: "Oil & gas contracts, regulatory compliance, licensing, and environmental law in Nigeria's energy sector." },
-  { icon: "🏦", title: "Banking & Finance", desc: "Loan documentation, regulatory advice, debt recovery, and financial sector compliance." },
-  { icon: "🌍", title: "International Arbitration", desc: "Cross-border dispute resolution under ICC, UNCITRAL, and Lagos Court of Arbitration rules." },
-  { icon: "📋", title: "Public Law & Governance", desc: "Administrative law, judicial review, public procurement, and government advisory services." },
-];
-
-function PracticeAreas() {
-  return (
-    <section id="practice-areas" className="py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-[1px] bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">What We Do</span>
-            <div className="w-12 h-[1px] bg-[#c9a84c]" />
-          </div>
-          <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-semibold text-white mb-4">
-            Practice Areas
-          </h2>
-          <p className="text-[#888880] font-['Inter'] font-light max-w-xl mx-auto">
-            Full-spectrum legal services — wherever you need us, whatever the challenge.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1a1a1a]">
-          {practices.map((p, i) => (
-            <div
-              key={i}
-              className="bg-[#080808] p-8 hover:bg-[#0f0f0f] group transition-colors duration-300 cursor-default"
-            >
-              <div className="text-3xl mb-4">{p.icon}</div>
-              <h3 className="font-['Playfair_Display'] text-white text-lg font-semibold mb-3 group-hover:text-[#c9a84c] transition-colors duration-200">
-                {p.title}
-              </h3>
-              <p className="text-[#888880] font-['Inter'] font-light text-sm leading-relaxed">
-                {p.desc}
-              </p>
-              <div className="mt-6 w-0 h-[1px] bg-[#c9a84c] group-hover:w-12 transition-all duration-300" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── TEAM ─────────────────────────────────────────────────────────────────────
-const team = [
-  { name: "Frank Mba", title: "Managing Partner", specialty: "Corporate & Commercial Law", years: "15+ years", initials: "FM" },
-  { name: "Adaeze Okonkwo", title: "Senior Partner", specialty: "Civil Litigation & Arbitration", years: "12 years", initials: "AO" },
-  { name: "Emeka Nwosu", title: "Partner", specialty: "Energy & Natural Resources", years: "10 years", initials: "EN" },
-  { name: "Halima Bello", title: "Associate", specialty: "Criminal Defense & Family Law", years: "7 years", initials: "HB" },
-];
-
-function Team() {
-  return (
-    <section id="our-team" className="py-24 md:py-32 bg-[#0d0d0d]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="section-divider" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">Our Attorneys</span>
-          </div>
-          <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-semibold text-white">
-            The Minds Behind
-            <em className="text-gradient not-italic"> Your Victory</em>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#1a1a1a]">
-          {team.map((member, i) => (
-            <div key={i} className="bg-[#080808] p-8 group hover:bg-[#0f0f0f] transition-colors duration-300">
-              {/* Avatar */}
-              <div className="w-16 h-16 border border-[#2a2a2a] group-hover:border-[#c9a84c]/50 flex items-center justify-center mb-6 transition-colors duration-300">
-                <span className="font-['Playfair_Display'] text-[#c9a84c] text-xl font-semibold">{member.initials}</span>
-              </div>
-              <h3 className="font-['Playfair_Display'] text-white text-xl font-semibold">{member.name}</h3>
-              <p className="text-[#c9a84c] text-xs tracking-widest uppercase font-['Inter'] mt-1 mb-3">{member.title}</p>
-              <p className="text-[#888880] text-sm font-['Inter'] font-light mb-4">{member.specialty}</p>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-[1px] bg-[#444]" />
-                <span className="text-[#555] text-xs font-['Inter']">{member.years}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
-const testimonials = [
-  {
-    quote: "Law Tribes handled our company's acquisition with incredible precision. Frank and his team were always three steps ahead. The deal closed without a single complication.",
-    author: "Chidi Obi",
-    role: "CEO, Obi Group Holdings",
-    initials: "CO",
-  },
-  {
-    quote: "I was facing a criminal charge that could have ruined my career. Law Tribes fought relentlessly and secured a complete dismissal. I owe them everything.",
-    author: "Ngozi Eze",
-    role: "Senior Civil Servant",
-    initials: "NE",
-  },
-  {
-    quote: "Their real estate team handled our commercial property dispute in record time. Professional, responsive, and absolutely results-focused.",
-    author: "Mohammed Abdullahi",
-    role: "Real Estate Developer, Abuja",
-    initials: "MA",
-  },
-];
-
-function Testimonials() {
-  return (
-    <section id="testimonials" className="py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-[1px] bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">Client Stories</span>
-            <div className="w-12 h-[1px] bg-[#c9a84c]" />
-          </div>
-          <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-semibold text-white">
-            What Our Clients Say
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#1a1a1a]">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-[#080808] p-10 group hover:bg-[#0f0f0f] transition-colors duration-300">
-              <div className="text-[#c9a84c] text-4xl font-['Playfair_Display'] mb-4 opacity-40">&ldquo;</div>
-              <p className="text-[#ccc] font-['Inter'] font-light leading-relaxed text-[15px] mb-8 italic">
-                {t.quote}
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center flex-shrink-0">
-                  <span className="text-[#c9a84c] text-xs font-semibold">{t.initials}</span>
-                </div>
-                <div>
-                  <p className="text-white font-['Inter'] font-medium text-sm">{t.author}</p>
-                  <p className="text-[#555] font-['Inter'] text-xs mt-0.5">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── CONTACT ──────────────────────────────────────────────────────────────────
-function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
-  const [sent, setSent] = useState(false);
+  useEffect(() => {
+    const timer = setInterval(() => setActiveTestimonial(a => (a + 1) % TESTIMONIALS.length), 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setSubmitted(true);
   };
 
-  const inputClass = "w-full bg-[#111] border border-[#2a2a2a] px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-[#c9a84c] transition-colors duration-200 font-['Inter'] text-sm";
-
   return (
-    <section id="contact" className="py-24 md:py-32 bg-[#0d0d0d]">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24">
+    <div style={{ fontFamily: "'Inter', sans-serif" }}>
+
+      {/* ── NAV ──────────────────────────────────────────── */}
+      <nav
+        style={{
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+          transition: "all 0.3s ease",
+          background: scrolled ? "rgba(8,8,8,0.97)" : "transparent",
+          borderBottom: scrolled ? "1px solid rgba(201,168,76,0.15)" : "1px solid transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          padding: scrolled ? "14px 40px" : "22px 40px",
+        }}
+      >
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {/* Logo */}
+          <a href="#" style={{ textDecoration: "none" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: "50%",
+                background: "linear-gradient(135deg, #c9a84c, #a07830)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 14, fontWeight: 700, color: "#080808",
+                fontFamily: "'Playfair Display', serif",
+              }}>LT</div>
+              <div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700, color: "#f5f0e8", letterSpacing: "0.05em" }}>
+                  LAW TRIBES
+                </div>
+                <div style={{ fontSize: 9, color: "#c9a84c", letterSpacing: "0.25em", textTransform: "uppercase" }}>
+                  ATTORNEYS
+                </div>
+              </div>
+            </div>
+          </a>
+
+          {/* Desktop links */}
+          <div style={{ display: "flex", gap: 36, alignItems: "center" }} className="desktop-nav">
+            {NAV_LINKS.map(link => (
+              <a
+                key={link}
+                href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
+                style={{
+                  color: "#888880", fontSize: 13, letterSpacing: "0.08em",
+                  textDecoration: "none", textTransform: "uppercase",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+                onMouseLeave={e => (e.currentTarget.style.color = "#888880")}
+              >
+                {link}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              style={{
+                padding: "9px 22px", border: "1px solid #c9a84c",
+                color: "#c9a84c", fontSize: 12, letterSpacing: "0.1em",
+                textDecoration: "none", textTransform: "uppercase",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#c9a84c"; e.currentTarget.style.color = "#080808"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#c9a84c"; }}
+            >
+              Free Consultation
+            </a>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#c9a84c", display: "none" }}
+            className="mobile-menu-btn"
+          >
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {menuOpen
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              }
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div style={{ background: "#111111", borderTop: "1px solid #2a2a2a", padding: "20px 40px" }}>
+            {[...NAV_LINKS, "Free Consultation"].map(link => (
+              <a
+                key={link}
+                href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block", padding: "12px 0",
+                  borderBottom: "1px solid #1a1a1a",
+                  color: link === "Free Consultation" ? "#c9a84c" : "#f5f0e8",
+                  textDecoration: "none", fontSize: 14, letterSpacing: "0.05em",
+                }}
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section
+        id="hero"
+        style={{
+          minHeight: "100vh",
+          background: "linear-gradient(160deg, #080808 0%, #0f0c07 50%, #0a0808 100%)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          position: "relative", overflow: "hidden",
+          padding: "120px 40px 80px",
+        }}
+      >
+        {/* Background texture lines */}
+        <div style={{
+          position: "absolute", inset: 0, opacity: 0.03,
+          backgroundImage: "repeating-linear-gradient(0deg, #c9a84c 0px, #c9a84c 1px, transparent 1px, transparent 60px), repeating-linear-gradient(90deg, #c9a84c 0px, #c9a84c 1px, transparent 1px, transparent 60px)",
+        }} />
+
+        {/* Glow */}
+        <div style={{
+          position: "absolute", top: "30%", left: "50%", transform: "translate(-50%, -50%)",
+          width: 600, height: 600, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+
+        <div style={{ maxWidth: 900, textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div style={{
+            display: "inline-block", padding: "6px 20px", marginBottom: 32,
+            border: "1px solid rgba(201,168,76,0.4)", color: "#c9a84c",
+            fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase",
+          }}>
+            ⚖ Abuja, Nigeria · Established 2009
+          </div>
+
+          <h1 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(42px, 7vw, 80px)",
+            fontWeight: 700, lineHeight: 1.1,
+            color: "#f5f0e8", marginBottom: 8,
+          }}>
+            Law Tribes
+          </h1>
+          <h1 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(42px, 7vw, 80px)",
+            fontWeight: 400, lineHeight: 1.1, fontStyle: "italic",
+            background: "linear-gradient(135deg, #e8c96a, #c9a84c, #a07830)",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            marginBottom: 32,
+          }}>
+            Attorneys
+          </h1>
+
+          <p style={{
+            fontSize: "clamp(16px, 2vw, 20px)", color: "#888880",
+            lineHeight: 1.8, maxWidth: 620, margin: "0 auto 48px",
+            fontWeight: 300,
+          }}>
+            Premier legal counsel across all practice areas. We combine decades of Nigerian
+            legal expertise with unwavering dedication to your cause.
+          </p>
+
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <a
+              href="#contact"
+              style={{
+                padding: "15px 40px",
+                background: "linear-gradient(135deg, #c9a84c, #a07830)",
+                color: "#080808", fontWeight: 600, fontSize: 13,
+                letterSpacing: "0.1em", textTransform: "uppercase",
+                textDecoration: "none", transition: "all 0.2s",
+                boxShadow: "0 8px 32px rgba(201,168,76,0.25)",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 12px 40px rgba(201,168,76,0.4)")}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 8px 32px rgba(201,168,76,0.25)")}
+            >
+              Book Free Consultation
+            </a>
+            <a
+              href="#practice-areas"
+              style={{
+                padding: "15px 40px",
+                border: "1px solid rgba(201,168,76,0.4)",
+                color: "#c9a84c", fontSize: 13,
+                letterSpacing: "0.1em", textTransform: "uppercase",
+                textDecoration: "none", transition: "all 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = "#c9a84c")}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)")}
+            >
+              Our Practice Areas
+            </a>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{
+          position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 8, opacity: 0.5,
+        }}>
+          <div style={{ fontSize: 11, color: "#c9a84c", letterSpacing: "0.2em" }}>SCROLL</div>
+          <div style={{ width: 1, height: 40, background: "linear-gradient(to bottom, #c9a84c, transparent)" }} />
+        </div>
+      </section>
+
+      {/* ── STATS BAR ──────────────────────────────────────── */}
+      <div style={{
+        background: "linear-gradient(135deg, #1a1508, #111111)",
+        borderTop: "1px solid rgba(201,168,76,0.2)",
+        borderBottom: "1px solid rgba(201,168,76,0.2)",
+        padding: "40px 40px",
+      }}>
+        <div style={{
+          maxWidth: 1000, margin: "0 auto",
+          display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20,
+        }}>
+          {STATS.map(s => (
+            <div key={s.label} style={{ textAlign: "center" }}>
+              <div style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700,
+                background: "linear-gradient(135deg, #e8c96a, #c9a84c)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              }}>{s.value}</div>
+              <div style={{ color: "#888880", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 4 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── ABOUT ─────────────────────────────────────────── */}
+      <section id="about" style={{ padding: "100px 40px", background: "#080808" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           {/* Left */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="section-divider" />
-              <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-['Inter']">Get In Touch</span>
+            <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>
+              About the Firm
             </div>
-            <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl font-semibold text-white leading-tight mb-6">
-              Your First Consultation
-              <em className="text-gradient not-italic block">Is Always Free</em>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700,
+              color: "#f5f0e8", lineHeight: 1.2, marginBottom: 24,
+            }}>
+              Legal Excellence<br />
+              <span style={{ fontStyle: "italic", color: "#c9a84c" }}>Rooted in Integrity</span>
             </h2>
-            <p className="text-[#888880] font-['Inter'] font-light leading-relaxed mb-12">
-              Facing a legal challenge? Don&apos;t navigate it alone. Reach out to Law Tribes Attorneys
-              and speak directly with one of our experienced lawyers — no obligation, no pressure.
+            <div style={{ width: 60, height: 2, background: "linear-gradient(to right, #c9a84c, transparent)", marginBottom: 28 }} />
+            <p style={{ color: "#888880", lineHeight: 1.9, marginBottom: 20, fontSize: 15 }}>
+              Law Tribes Attorneys is a full-service law firm headquartered in Abuja, Nigeria. 
+              We have built our reputation on a simple belief: every client deserves counsel that is 
+              brilliant, tenacious, and honest — regardless of the complexity or scale of their matter.
             </p>
-
-            {/* Contact details */}
-            <div className="space-y-6">
-              {[
-                {
-                  icon: (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
-                    </svg>
-                  ),
-                  label: "Office",
-                  value: "Plot 114, Aminu Kano Crescent, Wuse 2, Abuja, FCT, Nigeria",
-                },
-                {
-                  icon: (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.15a16 16 0 006.94 6.94l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                    </svg>
-                  ),
-                  label: "Phone",
-                  value: "+234 803 000 0000",
-                },
-                {
-                  icon: (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
-                    </svg>
-                  ),
-                  label: "Email",
-                  value: "info@lawtribes.ng",
-                },
-                {
-                  icon: (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-                    </svg>
-                  ),
-                  label: "Hours",
-                  value: "Mon – Fri: 8:00 AM – 6:00 PM WAT",
-                },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="text-[#c9a84c] mt-0.5 flex-shrink-0">{item.icon}</div>
-                  <div>
-                    <p className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] mb-1">{item.label}</p>
-                    <p className="text-[#ccc] font-['Inter'] font-light text-sm">{item.value}</p>
-                  </div>
+            <p style={{ color: "#888880", lineHeight: 1.9, marginBottom: 32, fontSize: 15 }}>
+              From multinational corporations structuring billion-naira transactions to individuals 
+              navigating sensitive family matters, our attorneys bring the same fierce commitment 
+              and depth of expertise to every brief we accept.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {["Experienced team of qualified Nigerian attorneys", "Licensed by the Nigerian Bar Association", "FCT High Court and Supreme Court practitioners", "Strict confidentiality and client-first approach"].map(item => (
+                <div key={item} style={{ display: "flex", alignItems: "center", gap: 12, color: "#c9a84c", fontSize: 14 }}>
+                  <span>✦</span>
+                  <span style={{ color: "#aaa098" }}>{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — form */}
+          {/* Right — decorative */}
+          <div style={{ position: "relative" }}>
+            <div style={{
+              background: "linear-gradient(135deg, #1a1508, #111111)",
+              border: "1px solid rgba(201,168,76,0.2)",
+              padding: 48, position: "relative",
+            }}>
+              <div style={{
+                position: "absolute", top: -1, left: -1,
+                width: 60, height: 60,
+                borderTop: "2px solid #c9a84c", borderLeft: "2px solid #c9a84c",
+              }} />
+              <div style={{
+                position: "absolute", bottom: -1, right: -1,
+                width: 60, height: 60,
+                borderBottom: "2px solid #c9a84c", borderRight: "2px solid #c9a84c",
+              }} />
+              <div style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 80, color: "rgba(201,168,76,0.1)", lineHeight: 1, marginBottom: 16,
+              }}>"</div>
+              <p style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 20, color: "#f5f0e8", lineHeight: 1.7, fontStyle: "italic", marginBottom: 28,
+              }}>
+                Justice is not a privilege. It is a right. And we fight to make sure every 
+                client we serve can access it fully.
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #c9a84c, #a07830)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "'Playfair Display', serif", fontWeight: 700, color: "#080808", fontSize: 16,
+                }}>FM</div>
+                <div>
+                  <div style={{ color: "#f5f0e8", fontWeight: 600, fontSize: 15 }}>Frank Mba</div>
+                  <div style={{ color: "#c9a84c", fontSize: 12, letterSpacing: "0.05em" }}>Managing Partner</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRACTICE AREAS ─────────────────────────────────── */}
+      <section id="practice-areas" style={{ padding: "100px 40px", background: "#0a0a0a" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>
+              What We Do
+            </div>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#f5f0e8",
+            }}>
+              Practice Areas
+            </h2>
+            <div style={{ width: 60, height: 2, background: "linear-gradient(to right, #c9a84c, transparent)", margin: "20px auto 0" }} />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
+            {PRACTICE_AREAS.map((area, i) => (
+              <div
+                key={i}
+                style={{
+                  background: "#111111",
+                  border: "1px solid #1a1a1a",
+                  padding: "36px 28px",
+                  transition: "all 0.3s ease",
+                  cursor: "default",
+                  position: "relative", overflow: "hidden",
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget;
+                  el.style.borderColor = "rgba(201,168,76,0.4)";
+                  el.style.transform = "translateY(-4px)";
+                  el.style.boxShadow = "0 16px 48px rgba(201,168,76,0.08)";
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget;
+                  el.style.borderColor = "#1a1a1a";
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ fontSize: 28, marginBottom: 16 }}>{area.icon}</div>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: 18, fontWeight: 600, color: "#f5f0e8", marginBottom: 12,
+                }}>{area.title}</h3>
+                <p style={{ color: "#666660", fontSize: 14, lineHeight: 1.7 }}>{area.desc}</p>
+                <div style={{
+                  position: "absolute", bottom: 0, left: 0,
+                  width: "100%", height: 2,
+                  background: "linear-gradient(to right, #c9a84c, transparent)",
+                  opacity: 0, transition: "opacity 0.3s",
+                }} className="card-line" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TEAM ──────────────────────────────────────────── */}
+      <section id="our-team" style={{ padding: "100px 40px", background: "#080808" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>
+              The People
+            </div>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#f5f0e8",
+            }}>
+              Our Team
+            </h2>
+            <div style={{ width: 60, height: 2, background: "linear-gradient(to right, #c9a84c, transparent)", margin: "20px auto 0" }} />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 28 }}>
+            {TEAM.map((member, i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{
+                  width: 100, height: 100, borderRadius: "50%",
+                  background: i === 0 ? "linear-gradient(135deg, #c9a84c, #a07830)" : "linear-gradient(135deg, #2a2a2a, #1a1a1a)",
+                  border: i === 0 ? "none" : "1px solid #2a2a2a",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "'Playfair Display', serif", fontWeight: 700,
+                  fontSize: 24, color: i === 0 ? "#080808" : "#c9a84c",
+                  margin: "0 auto 20px",
+                  boxShadow: i === 0 ? "0 8px 32px rgba(201,168,76,0.3)" : "none",
+                }}>{member.initial}</div>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: 20, fontWeight: 600, color: "#f5f0e8", marginBottom: 4,
+                }}>{member.name}</h3>
+                <div style={{ color: "#c9a84c", fontSize: 12, letterSpacing: "0.1em", marginBottom: 8 }}>{member.title}</div>
+                <div style={{ color: "#555550", fontSize: 13 }}>{member.areas}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ───────────────────────────────────── */}
+      <section id="testimonials" style={{
+        padding: "100px 40px",
+        background: "linear-gradient(135deg, #0f0c07, #0a0a0a)",
+        borderTop: "1px solid rgba(201,168,76,0.1)",
+      }}>
+        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>
+            Client Voices
+          </div>
+          <h2 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, color: "#f5f0e8", marginBottom: 60,
+          }}>
+            Testimonials
+          </h2>
+
+          {/* Quote */}
+          <div style={{ position: "relative", minHeight: 200 }}>
+            <div style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 64, color: "rgba(201,168,76,0.2)", lineHeight: 1,
+              position: "absolute", top: -20, left: 0,
+            }}>"</div>
+            <p style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(16px, 2.5vw, 22px)", color: "#c8c0b0",
+              lineHeight: 1.8, fontStyle: "italic", padding: "0 40px",
+              transition: "opacity 0.5s",
+            }}>
+              {TESTIMONIALS[activeTestimonial].quote}
+            </p>
+          </div>
+
+          <div style={{ marginTop: 40 }}>
+            <div style={{ color: "#f5f0e8", fontWeight: 600, fontSize: 16 }}>
+              {TESTIMONIALS[activeTestimonial].author}
+            </div>
+            <div style={{ color: "#c9a84c", fontSize: 13, marginTop: 4 }}>
+              {TESTIMONIALS[activeTestimonial].role}
+            </div>
+          </div>
+
+          {/* Dots */}
+          <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 32 }}>
+            {TESTIMONIALS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveTestimonial(i)}
+                style={{
+                  width: i === activeTestimonial ? 24 : 8, height: 8, borderRadius: 4,
+                  background: i === activeTestimonial ? "#c9a84c" : "#2a2a2a",
+                  border: "none", cursor: "pointer", transition: "all 0.3s",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT ───────────────────────────────────────── */}
+      <section id="contact" style={{ padding: "100px 40px", background: "#080808" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80 }}>
+
+          {/* Left info */}
           <div>
-            {sent ? (
-              <div className="border border-[#c9a84c]/30 bg-[#c9a84c]/5 p-12 text-center h-full flex flex-col items-center justify-center">
-                <div className="text-[#c9a84c] text-4xl mb-4">✓</div>
-                <h3 className="font-['Playfair_Display'] text-white text-2xl mb-3">Message Received</h3>
-                <p className="text-[#888880] font-['Inter'] font-light">
-                  Thank you. A member of our team will contact you within 24 hours to schedule your consultation.
-                </p>
+            <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 16 }}>
+              Get in Touch
+            </div>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 700, color: "#f5f0e8", marginBottom: 20,
+            }}>
+              Book a Free<br />
+              <span style={{ fontStyle: "italic", color: "#c9a84c" }}>Consultation</span>
+            </h2>
+            <div style={{ width: 60, height: 2, background: "linear-gradient(to right, #c9a84c, transparent)", marginBottom: 28 }} />
+            <p style={{ color: "#888880", lineHeight: 1.8, marginBottom: 40, fontSize: 15 }}>
+              Your first consultation is always free. Tell us about your legal matter 
+              and we will connect you with the right attorney from our team.
+            </p>
+
+            {[
+              { icon: "📍", label: "Address", value: "Plot 14, Adetokunbo Ademola Crescent, Wuse II, Abuja, FCT" },
+              { icon: "📞", label: "Phone", value: "+234 803 000 0000" },
+              { icon: "✉️", label: "Email", value: "hello@lawtribesattorneys.com" },
+              { icon: "🕐", label: "Hours", value: "Mon–Fri: 8:00am – 6:00pm WAT" },
+            ].map(item => (
+              <div key={item.label} style={{ display: "flex", gap: 16, marginBottom: 20 }}>
+                <div style={{ fontSize: 18, minWidth: 24 }}>{item.icon}</div>
+                <div>
+                  <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>{item.label}</div>
+                  <div style={{ color: "#aaa098", fontSize: 14 }}>{item.value}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right form */}
+          <div style={{
+            background: "#111111",
+            border: "1px solid #1a1a1a",
+            padding: 40,
+            position: "relative",
+          }}>
+            <div style={{ position: "absolute", top: -1, left: -1, width: 40, height: 40, borderTop: "2px solid #c9a84c", borderLeft: "2px solid #c9a84c" }} />
+            <div style={{ position: "absolute", bottom: -1, right: -1, width: 40, height: 40, borderBottom: "2px solid #c9a84c", borderRight: "2px solid #c9a84c" }} />
+
+            {submitted ? (
+              <div style={{ textAlign: "center", padding: "60px 0" }}>
+                <div style={{ fontSize: 40, marginBottom: 16 }}>✦</div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#f5f0e8", marginBottom: 8 }}>
+                  Message Received
+                </div>
+                <div style={{ color: "#888880", fontSize: 14 }}>
+                  We will be in touch within 24 hours.
+                </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] block mb-2">Full Name *</label>
-                    <input
-                      type="text" required
-                      className={inputClass}
-                      placeholder="Your name"
-                      value={form.name}
-                      onChange={e => setForm({ ...form, name: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] block mb-2">Email *</label>
-                    <input
-                      type="email" required
-                      className={inputClass}
-                      placeholder="your@email.com"
-                      value={form.email}
-                      onChange={e => setForm({ ...form, email: e.target.value })}
-                    />
-                  </div>
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                  {[
+                    { key: "name", label: "Full Name", placeholder: "Your name", type: "text" },
+                    { key: "email", label: "Email", placeholder: "your@email.com", type: "email" },
+                  ].map(field => (
+                    <div key={field.key}>
+                      <label style={{ color: "#888880", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{field.label}</label>
+                      <input
+                        type={field.type} placeholder={field.placeholder} required
+                        value={formData[field.key as keyof typeof formData]}
+                        onChange={e => setFormData(p => ({ ...p, [field.key]: e.target.value }))}
+                        style={{
+                          width: "100%", background: "#0a0a0a",
+                          border: "1px solid #2a2a2a", color: "#f5f0e8",
+                          padding: "12px 14px", fontSize: 14, outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] block mb-2">Phone</label>
+                {[
+                  { key: "phone", label: "Phone Number", placeholder: "+234 ...", type: "tel" },
+                  { key: "subject", label: "Legal Matter", placeholder: "e.g. Property dispute, Company formation...", type: "text" },
+                ].map(field => (
+                  <div key={field.key}>
+                    <label style={{ color: "#888880", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{field.label}</label>
                     <input
-                      type="tel"
-                      className={inputClass}
-                      placeholder="+234 ..."
-                      value={form.phone}
-                      onChange={e => setForm({ ...form, phone: e.target.value })}
+                      type={field.type} placeholder={field.placeholder}
+                      value={formData[field.key as keyof typeof formData]}
+                      onChange={e => setFormData(p => ({ ...p, [field.key]: e.target.value }))}
+                      style={{
+                        width: "100%", background: "#0a0a0a",
+                        border: "1px solid #2a2a2a", color: "#f5f0e8",
+                        padding: "12px 14px", fontSize: 14, outline: "none",
+                      }}
                     />
                   </div>
-                  <div>
-                    <label className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] block mb-2">Practice Area</label>
-                    <select
-                      className={inputClass + " cursor-pointer"}
-                      value={form.service}
-                      onChange={e => setForm({ ...form, service: e.target.value })}
-                    >
-                      <option value="" className="bg-[#111]">Select area</option>
-                      {practices.map(p => (
-                        <option key={p.title} value={p.title} className="bg-[#111]">{p.title}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                ))}
                 <div>
-                  <label className="text-[#555] text-xs tracking-widest uppercase font-['Inter'] block mb-2">Brief Description *</label>
+                  <label style={{ color: "#888880", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Message</label>
                   <textarea
-                    required rows={5}
-                    className={inputClass + " resize-none"}
-                    placeholder="Briefly describe your legal matter..."
-                    value={form.message}
-                    onChange={e => setForm({ ...form, message: e.target.value })}
+                    rows={4} placeholder="Briefly describe your situation..."
+                    required
+                    value={formData.message}
+                    onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                    style={{
+                      width: "100%", background: "#0a0a0a",
+                      border: "1px solid #2a2a2a", color: "#f5f0e8",
+                      padding: "12px 14px", fontSize: 14, resize: "vertical", outline: "none",
+                    }}
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#c9a84c] text-black font-['Inter'] font-semibold tracking-wider text-sm hover:bg-[#e8c96a] transition-colors duration-200 mt-2"
+                  style={{
+                    padding: "14px", marginTop: 4,
+                    background: "linear-gradient(135deg, #c9a84c, #a07830)",
+                    color: "#080808", fontWeight: 700, fontSize: 13,
+                    letterSpacing: "0.1em", textTransform: "uppercase",
+                    border: "none", cursor: "pointer",
+                    boxShadow: "0 4px 20px rgba(201,168,76,0.2)",
+                    transition: "box-shadow 0.2s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 8px 32px rgba(201,168,76,0.4)")}
+                  onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 20px rgba(201,168,76,0.2)")}
                 >
-                  Request Free Consultation
+                  Send Message
                 </button>
-                <p className="text-[#444] text-xs font-['Inter'] text-center">
-                  All communications are protected by attorney-client privilege.
-                </p>
               </form>
             )}
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
 
-// ─── FOOTER ───────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="border-t border-[#1a1a1a] py-12">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 border-2 border-[#c9a84c] flex items-center justify-center">
-                <span className="text-[#c9a84c] font-bold text-xs">LT</span>
+      {/* ── FOOTER ────────────────────────────────────────── */}
+      <footer style={{
+        background: "#050505",
+        borderTop: "1px solid rgba(201,168,76,0.15)",
+        padding: "48px 40px 28px",
+      }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48 }}>
+            {/* Brand */}
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: "50%",
+                  background: "linear-gradient(135deg, #c9a84c, #a07830)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 14, fontWeight: 700, color: "#080808",
+                  fontFamily: "'Playfair Display', serif",
+                }}>LT</div>
+                <div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, color: "#f5f0e8" }}>LAW TRIBES</div>
+                  <div style={{ fontSize: 9, color: "#c9a84c", letterSpacing: "0.25em" }}>ATTORNEYS</div>
+                </div>
               </div>
-              <div>
-                <span className="font-['Playfair_Display'] text-white text-lg font-semibold">Law Tribes</span>
-                <span className="block text-[#888880] text-[9px] tracking-[0.3em] uppercase">Attorneys</span>
-              </div>
+              <p style={{ color: "#555550", fontSize: 13, lineHeight: 1.8, maxWidth: 240 }}>
+                Full-service legal counsel in Abuja, Nigeria. Principled. Relentless. Trusted.
+              </p>
             </div>
-            <p className="text-[#555] font-['Inter'] font-light text-sm leading-relaxed max-w-xs">
-              Full-service legal representation in Abuja, Nigeria. Trusted by individuals, businesses, and institutions since 2010.
-            </p>
-          </div>
 
-          {/* Quick links */}
-          <div>
-            <h4 className="text-[#c9a84c] text-xs tracking-[0.3em] uppercase font-['Inter'] mb-4">Quick Links</h4>
-            <div className="space-y-2">
-              {["About", "Practice Areas", "Our Team", "Testimonials", "Contact"].map(l => (
-                <a key={l} href={`#${l.toLowerCase().replace(" ", "-")}`} className="block text-[#555] hover:text-[#c9a84c] text-sm font-['Inter'] transition-colors">
-                  {l}
-                </a>
+            {/* Practice */}
+            <div>
+              <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16 }}>Practice</div>
+              {["Corporate Law", "Litigation", "Real Estate", "Family Law", "Criminal Defense"].map(l => (
+                <a key={l} href="#practice-areas" style={{ display: "block", color: "#555550", fontSize: 13, marginBottom: 8, textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#555550")}>{l}</a>
               ))}
             </div>
+
+            {/* Firm */}
+            <div>
+              <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16 }}>Firm</div>
+              {["About Us", "Our Team", "Testimonials", "Contact"].map(l => (
+                <a key={l} href={`#${l.toLowerCase().replace(/\s+/g, "-")}`} style={{ display: "block", color: "#555550", fontSize: 13, marginBottom: 8, textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#555550")}>{l}</a>
+              ))}
+            </div>
+
+            {/* Contact */}
+            <div>
+              <div style={{ color: "#c9a84c", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16 }}>Contact</div>
+              <div style={{ color: "#555550", fontSize: 13, lineHeight: 1.8 }}>
+                <div>Wuse II, Abuja</div>
+                <div>FCT, Nigeria</div>
+                <div style={{ marginTop: 8 }}>+234 803 000 0000</div>
+                <div>hello@lawtribesattorneys.com</div>
+              </div>
+            </div>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-[#c9a84c] text-xs tracking-[0.3em] uppercase font-['Inter'] mb-4">Contact</h4>
-            <div className="space-y-2 text-[#555] text-sm font-['Inter'] font-light">
-              <p>Wuse 2, Abuja, FCT</p>
-              <p>Nigeria</p>
-              <p className="mt-3">+234 803 000 0000</p>
-              <p>info@lawtribes.ng</p>
+          {/* Bottom */}
+          <div style={{
+            borderTop: "1px solid #111111", paddingTop: 24,
+            display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12,
+          }}>
+            <div style={{ color: "#333330", fontSize: 12 }}>
+              © {new Date().getFullYear()} Law Tribes Attorneys. All rights reserved.
+            </div>
+            <div style={{ color: "#333330", fontSize: 12 }}>
+              Licensed by the Nigerian Bar Association · FCT, Nigeria
             </div>
           </div>
         </div>
+      </footer>
 
-        <div className="border-t border-[#1a1a1a] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#333] text-xs font-['Inter']">
-            © {new Date().getFullYear()} Law Tribes Attorneys. All rights reserved. · Abuja, Nigeria
-          </p>
-          <p className="text-[#333] text-xs font-['Inter']">
-            Licensed by the Nigerian Bar Association
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// ─── PAGE ─────────────────────────────────────────────────────────────────────
-export default function Home() {
-  return (
-    <>
-      <Nav />
-      <Hero />
-      <About />
-      <PracticeAreas />
-      <Team />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </>
+      {/* Responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: block !important; }
+          section > div[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          footer div[style*="grid-template-columns: 2fr 1fr 1fr 1fr"] {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
