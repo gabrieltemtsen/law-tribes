@@ -75,12 +75,12 @@ const TEAM = [
 
 const TESTIMONIALS = [
   {
-    quote: "LawTribes handled our company's acquisition seamlessly. Their attention to detail and deep knowledge of Nigerian corporate law gave us complete confidence throughout the process.",
+    quote: "Frank Mba Legal handled our company's acquisition seamlessly. Their attention to detail and deep knowledge of Nigerian corporate law gave us complete confidence throughout the process.",
     author: "Chukwuemeka Obi",
     role: "CEO, TechBridge Nigeria",
   },
   {
-    quote: "When my property dispute seemed unwinnable, LawTribes found angles no other firm had considered. They secured my title within six months. Exceptional team.",
+    quote: "When my property dispute seemed unwinnable, Frank Mba Legal found angles no other firm had considered. They secured my title within six months. Exceptional team.",
     author: "Mrs. Fatima Al-Hassan",
     role: "Business Owner, Abuja",
   },
@@ -146,13 +146,13 @@ export default function Home() {
                 fontSize: 14, fontWeight: 700, color: "#080808",
                 fontFamily: "'Playfair Display', serif",
                 flexShrink: 0,
-              }}>LT</div>
+              }}>FL</div>
               <div>
                 <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 16, fontWeight: 700, color: "#f5f0e8", letterSpacing: "0.05em" }}>
-                  LAWTRIBES
+                  FRANK MBA
                 </div>
                 <div style={{ fontSize: 9, color: "#c9a84c", letterSpacing: "0.25em", textTransform: "uppercase" }}>
-                  ATTORNEYS
+                  LEGAL
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@ export default function Home() {
             fontWeight: 700, lineHeight: 1.1,
             color: "#f5f0e8", marginBottom: 8,
           }}>
-            LawTribes
+            Frank Mba
           </h1>
           <h1 style={{
             fontFamily: "'Playfair Display', serif",
@@ -267,7 +267,7 @@ export default function Home() {
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             marginBottom: 32,
           }}>
-            Attorneys
+            Legal
           </h1>
 
           <p style={{
@@ -351,8 +351,8 @@ export default function Home() {
             </h2>
             <div style={{ width: 60, height: 2, background: "linear-gradient(to right, #c9a84c, transparent)", marginBottom: 28 }} />
             <p style={{ color: "#888880", lineHeight: 1.9, marginBottom: 20, fontSize: 15 }}>
-              LawTribes Attorneys is a full-service law firm headquartered in Abuja, Nigeria. 
-              We have built our reputation on a simple belief: every client deserves counsel that is 
+              Frank Mba Legal is a full-service law firm headquartered in Abuja, Nigeria.
+              We have built our reputation on a simple belief: every client deserves counsel that is
               brilliant, tenacious, and honest — regardless of the complexity or scale of their matter.
             </p>
             <p style={{ color: "#888880", lineHeight: 1.9, marginBottom: 32, fontSize: 15 }}>
@@ -596,7 +596,7 @@ export default function Home() {
             {[
               { icon: "📍", label: "Address", value: "No 5 Tamba street, Parakou, Wuse 2" },
               { icon: "📞", label: "Phone", value: "0905 833 6904, 0803 837 5844" },
-              { icon: "✉️", label: "Email", value: "info@LawTribesAttorneys.com" },
+              { icon: "✉️", label: "Email", value: "info@frankMbaLegal.com" },
               { icon: "🕐", label: "Hours", value: "Mon–Fri: 8:00am – 6:00pm WAT" },
             ].map(item => (
               <div key={item.label} style={{ display: "flex", gap: 16, marginBottom: 20 }}>
@@ -718,10 +718,10 @@ export default function Home() {
                   fontSize: 14, fontWeight: 700, color: "#080808",
                   fontFamily: "'Playfair Display', serif",
                   flexShrink: 0,
-                }}>LT</div>
+                }}>FL</div>
                 <div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, color: "#f5f0e8" }}>LAWTRIBES</div>
-                  <div style={{ fontSize: 9, color: "#c9a84c", letterSpacing: "0.25em" }}>ATTORNEYS</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, color: "#f5f0e8" }}>FRANK MBA</div>
+                  <div style={{ fontSize: 9, color: "#c9a84c", letterSpacing: "0.25em" }}>LEGAL</div>
                 </div>
               </div>
               <p style={{ color: "#555550", fontSize: 13, lineHeight: 1.8, maxWidth: 240 }}>
@@ -752,7 +752,7 @@ export default function Home() {
                 <div>No 5 Tamba street</div>
                 <div>Parakou, Wuse 2</div>
                 <div style={{ marginTop: 8 }}>0905 833 6904<br/>0803 837 5844</div>
-                <div>info@LawTribesAttorneys.com</div>
+                <div>info@frankMbaLegal.com</div>
               </div>
             </div>
           </div>
@@ -760,7 +760,7 @@ export default function Home() {
           {/* Bottom */}
           <div className="footer-bottom">
             <div style={{ color: "#333330", fontSize: 12 }}>
-              © {new Date().getFullYear()} LawTribes Attorneys. All rights reserved.
+              © {new Date().getFullYear()} Frank Mba Legal. All rights reserved.
             </div>
             <div style={{ color: "#333330", fontSize: 12 }}>
               Licensed by the Nigerian Bar Association · FCT, Nigeria

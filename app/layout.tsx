@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LawTribes Attorneys | Abuja, Nigeria",
-  description: "LawTribes Attorneys — a premier full-service law firm in Abuja, Nigeria. Expert legal counsel across corporate, litigation, real estate, criminal defense, family law, and more.",
-  keywords: "law firm Abuja, Nigerian lawyers, corporate law Nigeria, litigation Abuja, LawTribes Attorneys",
+  title: "Frank Mba Legal | Abuja, Nigeria",
+  description: "Frank Mba Legal — a premier full-service law firm in Abuja, Nigeria. Expert legal counsel across corporate, litigation, real estate, criminal defense, family law, and more.",
+  keywords: "law firm Abuja, Nigerian lawyers, corporate law Nigeria, litigation Abuja, Frank Mba Legal",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
